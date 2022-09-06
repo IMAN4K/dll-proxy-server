@@ -1,0 +1,3 @@
+[submodule "3rdparty/httpparser"]
+	path = 3rdparty/httpparser
+	url = https://github.com/nekipelov/httpparser.git

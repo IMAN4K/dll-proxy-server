@@ -3,7 +3,7 @@ This small project is a HTTP/HTTPS forward proxy server utility which is capable
 
 ## Get started
 To run the server follow based on platform:
- * Win32:
-   * `LD_PRELOAD=libProxyServer.so ls`
  * Linux:
+   * `LD_PRELOAD=libProxyServer.so ls`
+ * Win32:
    * `rundll32 ProxyServer.DLL,start`

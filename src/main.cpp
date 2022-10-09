@@ -213,12 +213,11 @@ void ProxyConnection::downStreamReadyRead() {
                     || (request.method == kPost)
                     || (request.method == kHead)
                     || (request.method == kDelete)) {
-                const auto regex = QRegularExpression(QStringLiteral("^(.*):(\\d+)$"));
-                const auto match = regex.match(request.uri.c_str());
+                const QUrl url(QString::fromStdString(request.uri));
 
-                if (match.hasMatch()) {
-                    auto host = match.captured(1);
-                    auto port = match.captured(2).toInt();
+                if (url.isValid()) {
+                    auto host = url.host();
+                    auto port = url.port(80);
                     QHostInfo::lookupHost(host, this, [ = ](const QHostInfo & info) {
                         const auto addresses = info.addresses();
 

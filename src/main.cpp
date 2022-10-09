@@ -173,12 +173,12 @@ ProxyConnection::ProxyConnection(const QSharedPointer<QTcpSocket>& downStream, i
     _upStream{QSharedPointer<QTcpSocket>(new QTcpSocket, &QObject::deleteLater)} {
     QObject::connect(_downStream.get(), &QTcpSocket::readyRead,     this, &ProxyConnection::downStreamReadyRead);
     QObject::connect(_downStream.get(), &QTcpSocket::disconnected,  this, &ProxyConnection::terminate);
-    QObject::connect(_downStream.get(), &QTcpSocket::errorOccurred, this, [this]() {
+    QObject::connect(_downStream.get(), qOverload<QAbstractSocket::SocketError>(&QTcpSocket::error), this, [this](QAbstractSocket::SocketError) {
         qWarning() << QStringLiteral("DownStream error: ") << _downStream->errorString();
     });
     QObject::connect(_upStream.get(), &QTcpSocket::disconnected,  this, &ProxyConnection::terminate);
     QObject::connect(_upStream.get(), &QTcpSocket::readyRead,     this, &ProxyConnection::upStreamReadyRead);
-    QObject::connect(_upStream.get(), &QTcpSocket::errorOccurred, this, [this]() {
+    QObject::connect(_upStream.get(), qOverload<QAbstractSocket::SocketError>(&QTcpSocket::error), this, [this](QAbstractSocket::SocketError) {
         qWarning() << QStringLiteral("UpStream error: ") << _upStream->errorString();
     });
 }
